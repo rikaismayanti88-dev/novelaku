@@ -1,0 +1,4370 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Bandung Balada Bait yang Pecah - Novel karya Rika Ismayanti
+  </title>
+
+
+  <!-- =====================================================
+       GOOGLE FONT
+  ====================================================== -->
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <style>
+
+    /* =====================================================
+       ROOT
+    ====================================================== */
+
+    :root {
+
+      --bg-dark-green: #08120e;
+
+      --bg-charcoal: #0e0f12;
+
+      --bg-black: #050507;
+
+      --warm-orange: #d97724;
+
+      --muted-gold: #f5b041;
+
+      --cream: #f4efea;
+
+      --font-serif:
+        'Cormorant Garamond',
+        Georgia,
+        serif;
+
+      --font-sans:
+        'Montserrat',
+        sans-serif;
+    }
+
+
+    /* =====================================================
+       RESET
+    ====================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    html {
+
+      scroll-behavior: smooth;
+
+      background:
+        var(--bg-black);
+
+      color:
+        var(--cream);
+
+      font-family:
+        var(--font-sans);
+
+      overflow-x: hidden;
+    }
+
+
+    body {
+
+      background:
+        var(--bg-black);
+
+      overflow-x: hidden;
+
+      min-height: 100vh;
+    }
+
+
+    /* =====================================================
+       FILM GRAIN
+    ====================================================== */
+
+    .film-grain {
+
+      position: fixed;
+
+      inset: -50%;
+
+      width: 200%;
+
+      height: 200%;
+
+      background:
+
+        radial-gradient(
+          circle,
+          transparent 50%,
+          rgba(0, 0, 0, 0.7) 100%
+        ),
+
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+
+      pointer-events:
+        none;
+
+      z-index:
+        900;
+
+      opacity:
+        0.6;
+    }
+
+
+    /* =====================================================
+       CANVAS
+    ====================================================== */
+
+    .rain-canvas,
+    .particle-canvas {
+
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      pointer-events:
+        none;
+
+      z-index:
+        50;
+    }
+
+
+    /* =====================================================
+       CURSOR GLOW
+    ====================================================== */
+
+    .cursor-glow {
+
+      position: fixed;
+
+      width: 300px;
+      height: 300px;
+
+      background:
+
+        radial-gradient(
+          circle,
+          rgba(217, 119, 36, 0.08) 0%,
+          transparent 70%
+        );
+
+      border-radius:
+        50%;
+
+      pointer-events:
+        none;
+
+      transform:
+        translate(-50%, -50%);
+
+      z-index:
+        800;
+    }
+
+
+    /* =====================================================
+       NAVBAR
+    ====================================================== */
+
+    .navbar {
+
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding:
+        25px 50px;
+
+      z-index:
+        1000;
+
+      transition:
+        all 0.4s ease;
+    }
+
+
+    .navbar.scrolled {
+
+      padding:
+        15px 50px;
+
+      background:
+        rgba(8, 18, 14, 0.85);
+
+      backdrop-filter:
+        blur(10px);
+
+      border-bottom:
+        1px solid rgba(217, 119, 36, 0.2);
+    }
+
+
+    .nav-brand {
+
+      color:
+        var(--warm-orange);
+
+      text-decoration:
+        none;
+
+      font-family:
+        var(--font-serif);
+
+      font-size:
+        1.5rem;
+
+      font-weight:
+        700;
+
+      letter-spacing:
+        3px;
+    }
+
+
+    .nav-links {
+
+      display:
+        flex;
+
+      gap:
+        30px;
+
+      list-style:
+        none;
+    }
+
+
+    .nav-links a {
+
+      color:
+        var(--cream);
+
+      text-decoration:
+        none;
+
+      font-size:
+        0.85rem;
+
+      letter-spacing:
+        2px;
+
+      text-transform:
+        uppercase;
+
+      opacity:
+        0.8;
+
+      transition:
+        0.3s;
+    }
+
+
+    .nav-links a:hover {
+
+      color:
+        var(--warm-orange);
+
+      opacity:
+        1;
+    }
+
+
+    /* =====================================================
+       AUDIO
+    ====================================================== */
+
+    .audio-controls {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        flex-end;
+
+      gap:
+        8px;
+
+      flex-wrap:
+        wrap;
+    }
+
+
+    .audio-btn {
+
+      background:
+        rgba(5, 5, 7, 0.5);
+
+      border:
+        1px solid rgba(217, 119, 36, 0.45);
+
+      color:
+        var(--cream);
+
+      padding:
+        9px 15px;
+
+      font-family:
+        var(--font-sans);
+
+      font-size:
+        0.68rem;
+
+      letter-spacing:
+        1.5px;
+
+      cursor:
+        pointer;
+
+      border-radius:
+        25px;
+
+      transition:
+        all 0.3s ease;
+    }
+
+
+    .audio-btn:hover {
+
+      background:
+        rgba(217, 119, 36, 0.2);
+
+      border-color:
+        var(--warm-orange);
+
+      transform:
+        translateY(-2px);
+    }
+
+
+    .audio-btn.active {
+
+      background:
+        var(--warm-orange);
+
+      color:
+        var(--bg-black);
+
+      border-color:
+        var(--warm-orange);
+
+      box-shadow:
+        0 0 20px
+        rgba(217, 119, 36, 0.4);
+    }
+
+
+    /* =====================================================
+       HAMBURGER
+    ====================================================== */
+
+    .hamburger {
+
+      display:
+        none;
+
+      flex-direction:
+        column;
+
+      gap:
+        5px;
+
+      cursor:
+        pointer;
+    }
+
+
+    .hamburger span {
+
+      width:
+        25px;
+
+      height:
+        2px;
+
+      background:
+        var(--cream);
+    }
+
+
+    /* =====================================================
+       INTRO SCREEN
+    ====================================================== */
+
+    .intro-screen {
+
+      position:
+        fixed;
+
+      inset:
+        0;
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      background:
+        var(--bg-black);
+
+      z-index:
+        2000;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      justify-content:
+        center;
+
+      align-items:
+        center;
+
+      text-align:
+        center;
+
+      padding:
+        20px;
+
+      transition:
+        opacity 1.5s ease,
+        visibility 1.5s ease;
+    }
+
+
+    .intro-sub {
+
+      color:
+        var(--warm-orange);
+
+      font-size:
+        0.8rem;
+
+      letter-spacing:
+        5px;
+
+      margin-bottom:
+        25px;
+
+      opacity:
+        0;
+
+      animation:
+        fadeInBlur 2s forwards 0.5s;
+    }
+
+
+    .intro-title {
+
+      font-family:
+        var(--font-serif);
+
+      font-size:
+        clamp(2rem, 5vw, 4.5rem);
+
+      font-weight:
+        400;
+
+      line-height:
+        1.2;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .intro-title span {
+
+      display:
+        block;
+
+      opacity:
+        0;
+
+      filter:
+        blur(8px);
+
+      transform:
+        scale(0.95);
+
+      transition:
+        all 1.5s ease;
+    }
+
+
+    .intro-line {
+
+      width:
+        0;
+
+      height:
+        1px;
+
+      background:
+        var(--warm-orange);
+
+      margin:
+        30px auto;
+
+      transition:
+        width 1.5s ease;
+    }
+
+
+    .intro-btn {
+
+      display:
+        inline-block;
+
+      background:
+        transparent;
+
+      border:
+        1px solid var(--warm-orange);
+
+      color:
+        var(--cream);
+
+      padding:
+        14px 32px;
+
+      font-size:
+        0.85rem;
+
+      letter-spacing:
+        4px;
+
+      text-transform:
+        uppercase;
+
+      cursor:
+        pointer;
+
+      opacity:
+        0;
+
+      margin-top:
+        10px;
+
+      transition:
+        all 0.5s ease;
+
+      text-decoration:
+        none;
+    }
+
+
+    .intro-btn:hover {
+
+      background:
+        var(--warm-orange);
+
+      color:
+        var(--bg-black);
+
+      box-shadow:
+        0 0 25px
+        rgba(217, 119, 36, 0.5);
+    }
+
+
+    /* =====================================================
+       HERO
+    ====================================================== */
+
+    .hero {
+
+      position:
+        relative;
+
+      width:
+        100%;
+
+      height:
+        100vh;
+
+      overflow:
+        hidden;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      justify-content:
+        center;
+
+      align-items:
+        center;
+
+      text-align:
+        center;
+    }
+
+
+    .sky-bg {
+
+      position:
+        absolute;
+
+      inset:
+        0;
+
+      background:
+
+        linear-gradient(
+          180deg,
+          #05100c 0%,
+          #11221c 45%,
+          #8f4d19 75%,
+          #d97724 90%,
+          #f5b041 100%
+        );
+
+      z-index:
+        1;
+    }
+
+
+    .sun-glow {
+
+      position:
+        absolute;
+
+      bottom:
+        25%;
+
+      left:
+        50%;
+
+      transform:
+        translateX(-50%);
+
+      width:
+        350px;
+
+      height:
+        350px;
+
+      background:
+
+        radial-gradient(
+          circle,
+          rgba(245, 176, 65, 0.4) 0%,
+          rgba(217, 119, 36, 0.1) 50%,
+          transparent 80%
+        );
+
+      border-radius:
+        50%;
+
+      z-index:
+        2;
+
+      filter:
+        blur(20px);
+    }
+
+
+    .fog-layer {
+
+      position:
+        absolute;
+
+      bottom:
+        20%;
+
+      width:
+        200%;
+
+      height:
+        200px;
+
+      background:
+
+        linear-gradient(
+          0deg,
+          rgba(8, 18, 14, 0.8) 0%,
+          transparent 100%
+        );
+
+      z-index:
+        3;
+
+      opacity:
+        0.6;
+
+      animation:
+        fogMove 25s infinite linear;
+    }
+
+
+    .city-layer {
+
+      position:
+        absolute;
+
+      bottom:
+        0;
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      pointer-events:
+        none;
+    }
+
+
+    .buildings-back {
+
+      z-index:
+        4;
+
+      opacity:
+        0.5;
+    }
+
+
+    .buildings-front {
+
+      z-index:
+        5;
+    }
+
+
+    .road-perspective {
+
+      position:
+        absolute;
+
+      bottom:
+        0;
+
+      left:
+        50%;
+
+      transform:
+        translateX(-50%);
+
+      width:
+        100%;
+
+      height:
+        250px;
+
+      z-index:
+        6;
+
+      background:
+
+        linear-gradient(
+          0deg,
+          #050507 0%,
+          #0c1410 80%,
+          transparent 100%
+        );
+
+      clip-path:
+        polygon(
+          42% 0%,
+          58% 0%,
+          100% 100%,
+          0% 100%
+        );
+    }
+
+
+    .road-reflection {
+
+      position:
+        absolute;
+
+      top:
+        0;
+
+      left:
+        50%;
+
+      transform:
+        translateX(-50%);
+
+      width:
+        30%;
+
+      height:
+        100%;
+
+      background:
+
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(217, 119, 36, 0.25),
+          transparent
+        );
+
+      filter:
+        blur(8px);
+    }
+
+
+    .road-line {
+
+      position:
+        absolute;
+
+      left:
+        50%;
+
+      top:
+        0;
+
+      width:
+        4px;
+
+      height:
+        100%;
+
+      background:
+
+        linear-gradient(
+          180deg,
+          transparent,
+          rgba(245, 176, 65, 0.6),
+          transparent
+        );
+
+      transform:
+        translateX(-50%);
+    }
+
+
+    /* =====================================================
+       TREE CANOPY
+    ====================================================== */
+
+    .tree-canopy {
+
+      position:
+        absolute;
+
+      top:
+        -50px;
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      z-index:
+        8;
+
+      pointer-events:
+        none;
+    }
+
+
+    .foliage {
+
+      position:
+        absolute;
+
+      background:
+
+        radial-gradient(
+          circle,
+          #0a1812 30%,
+          #040907 80%
+        );
+
+      border-radius:
+        50%;
+
+      filter:
+        blur(2px);
+
+      animation:
+        sway 6s ease-in-out infinite alternate;
+    }
+
+
+    /* =====================================================
+       HERO CONTENT
+    ====================================================== */
+
+    .hero-content {
+
+      position:
+        relative;
+
+      z-index:
+        10;
+
+      text-align:
+        center;
+
+      padding:
+        0 20px;
+
+      max-width:
+        900px;
+
+      margin:
+        0 auto;
+    }
+
+
+    .author-name {
+
+      font-size:
+        0.85rem;
+
+      letter-spacing:
+        6px;
+
+      color:
+        var(--muted-gold);
+
+      text-transform:
+        uppercase;
+
+      margin-bottom:
+        15px;
+    }
+
+
+    .main-title {
+
+      font-family:
+        var(--font-serif);
+
+      font-size:
+        clamp(2.5rem, 7vw, 6rem);
+
+      font-weight:
+        700;
+
+      line-height:
+        1.05;
+
+      text-transform:
+        uppercase;
+
+      text-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.9);
+
+      margin-bottom:
+        25px;
+    }
+
+
+    .main-title .highlight {
+
+      color:
+        var(--warm-orange);
+
+      display:
+        block;
+    }
+
+
+    .hero-tagline {
+
+      font-family:
+        var(--font-serif);
+
+      font-size:
+        clamp(1rem, 2vw, 1.35rem);
+
+      font-style:
+        italic;
+
+      color:
+        var(--cream);
+
+      line-height:
+        1.8;
+
+      opacity:
+        0.9;
+
+      margin:
+        0 auto 35px;
+
+      max-width:
+        650px;
+    }
+
+
+    .scroll-indicator {
+
+      position:
+        absolute;
+
+      bottom:
+        30px;
+
+      left:
+        50%;
+
+      transform:
+        translateX(-50%);
+
+      z-index:
+        10;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      align-items:
+        center;
+
+      gap:
+        10px;
+
+      font-size:
+        0.65rem;
+
+      letter-spacing:
+        3px;
+
+      text-transform:
+        uppercase;
+
+      color:
+        var(--muted-gold);
+    }
+
+
+    .scroll-line {
+
+      width:
+        1px;
+
+      height:
+        40px;
+
+      background:
+        rgba(245, 176, 65, 0.2);
+
+      position:
+        relative;
+
+      overflow:
+        hidden;
+    }
+
+
+    .scroll-line::after {
+
+      content:
+        "";
+
+      position:
+        absolute;
+
+      top:
+        0;
+
+      left:
+        0;
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      background:
+        var(--warm-orange);
+
+      animation:
+        scrollDown 2s infinite;
+    }
+
+
+    /* =====================================================
+       STORY
+    ====================================================== */
+
+    .section-story {
+
+      position:
+        relative;
+
+      background:
+        var(--bg-dark-green);
+
+      padding:
+        140px 10%;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      text-align:
+        center;
+
+      gap:
+        50px;
+
+      z-index:
+        15;
+
+      overflow:
+        hidden;
+    }
+
+
+    .story-content {
+
+      max-width:
+        800px;
+
+      margin:
+        0 auto;
+    }
+
+
+    .story-title {
+
+      font-family:
+        var(--font-serif);
+
+      font-size:
+        clamp(2rem, 4vw, 3.8rem);
+
+      line-height:
+        1.15;
+
+      text-transform:
+        uppercase;
+
+      margin-bottom:
+        30px;
+    }
+
+
+    .story-title span {
+
+      color:
+        var(--warm-orange);
+
+      display:
+        block;
+    }
+
+
+    .story-text {
+
+      font-size:
+        1rem;
+
+      line-height:
+        1.9;
+
+      color:
+        rgba(244, 239, 234, 0.85);
+
+      margin-bottom:
+        40px;
+
+      font-weight:
+        300;
+    }
+
+
+    .story-quote {
+
+      font-family:
+        var(--font-serif);
+
+      font-size:
+        1.6rem;
+
+      font-style:
+        italic;
+
+      color:
+        var(--muted-gold);
+
+      border-top:
+        1px solid var(--warm-orange);
+
+      border-bottom:
+        1px solid var(--warm-orange);
+
+      padding:
+        20px 0;
+
+      line-height:
+        1.5;
+
+      max-width:
+        650px;
+
+      margin:
+        0 auto;
+    }
+
+
+    .story-tree-container {
+
+      position:
+        relative;
+
+      width:
+        100%;
+
+      max-width:
+        450px;
+
+      height:
+        350px;
+
+      display:
+        flex;
+
+      justify-content:
+        center;
+
+      align-items:
+        center;
+    }
+
+
+    .tree-svg {
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      filter:
+        drop-shadow(
+          0 10px 20px rgba(0,0,0,0.8)
+        );
+    }
+
+
+    /* =====================================================
+       BOOK SECTION
+    ====================================================== */
+
+    .section-book {
+
+      position:
+        relative;
+
+      background:
+        var(--bg-black);
+
+      padding:
+        140px 10%;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap:
+        60px;
+
+      align-items:
+        center;
+
+      z-index:
+        15;
+    }
+
+
+    .book-display {
+
+      position:
+        relative;
+
+      perspective:
+        1200px;
+
+      display:
+        flex;
+
+      justify-content:
+        center;
+
+      align-items:
+        center;
+    }
+
+
+    .book-wrapper {
+
+      position:
+        relative;
+
+      cursor:
+        pointer;
+
+      transform-style:
+        preserve-3d;
+
+      transition:
+        transform 0.8s
+        cubic-bezier(0.25,1,0.5,1);
+
+      animation:
+        floatBook 5s ease-in-out infinite alternate;
+    }
+
+
+    .book-wrapper:hover {
+
+      transform:
+        rotateY(-15deg)
+        rotateX(5deg)
+        scale(1.03);
+    }
+
+
+    .book-cover-img {
+
+      width:
+        100%;
+
+      max-width:
+        360px;
+
+      height:
+        auto;
+
+      border-radius:
+        4px;
+
+      display:
+        block;
+
+      box-shadow:
+
+        -15px 20px 40px rgba(0,0,0,0.9),
+
+        0 0 30px rgba(217,119,36,0.2);
+    }
+
+
+    .book-glow {
+
+      position:
+        absolute;
+
+      top:
+        50%;
+
+      left:
+        50%;
+
+      transform:
+        translate(-50%,-50%);
+
+      width:
+        80%;
+
+      height:
+        80%;
+
+      background:
+
+        radial-gradient(
+          circle,
+          rgba(217,119,36,0.3) 0%,
+          transparent 70%
+        );
+
+      filter:
+        blur(30px);
+
+      z-index:
+        -1;
+    }
+
+
+    .book-info {
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      align-items:
+        flex-start;
+
+      text-align:
+        left;
+    }
+
+
+    .book-subtitle {
+
+      font-size:
+        0.8rem;
+
+      letter-spacing:
+        4px;
+
+      color:
+        var(--warm-orange);
+
+      text-transform:
+        uppercase;
+
+      margin-bottom:
+        15px;
+    }
+
+
+    .book-main-title {
+
+      font-family:
+        var(--font-serif);
+
+      font-size:
+        clamp(2.2rem,3.5vw,3.5rem);
+
+      line-height:
+        1.1;
+
+      margin-bottom:
+        10px;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .book-author {
+
+      font-size:
+        0.9rem;
+
+      letter-spacing:
+        3px;
+
+      color:
+        var(--muted-gold);
+
+      margin-bottom:
+        30px;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .book-description {
+
+      font-size:
+        0.95rem;
+
+      line-height:
+        1.9;
+
+      color:
+        rgba(244,239,234,0.8);
+
+      margin-bottom:
+        35px;
+
+      font-weight:
+        300;
+
+      max-width:
+        550px;
+    }
+
+
+    .tag-pills {
+
+      display:
+        flex;
+
+      gap:
+        12px;
+
+      flex-wrap:
+        wrap;
+
+      justify-content:
+        flex-start;
+    }
+
+
+    .pill {
+
+      border:
+        1px solid rgba(217,119,36,0.5);
+
+      padding:
+        6px 16px;
+
+      border-radius:
+        20px;
+
+      font-size:
+        0.7rem;
+
+      letter-spacing:
+        2px;
+
+      color:
+        var(--cream);
+
+      background:
+        rgba(217,119,36,0.05);
+    }
+
+
+    /* =====================================================
+       BOOK MODAL
+    ====================================================== */
+
+    .modal-overlay {
+
+      position:
+        fixed;
+
+      inset:
+        0;
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      background:
+        rgba(5,5,7,0.96);
+
+      backdrop-filter:
+        blur(15px);
+
+      z-index:
+        3000;
+
+      display:
+        flex;
+
+      justify-content:
+        center;
+
+      align-items:
+        center;
+
+      opacity:
+        0;
+
+      visibility:
+        hidden;
+
+      transition:
+        all 0.5s ease;
+
+      overflow-y:
+        auto;
+    }
+
+
+    .modal-overlay.active {
+
+      opacity:
+        1;
+
+      visibility:
+        visible;
+    }
+
+
+    .modal-content {
+
+      text-align:
+        center;
+
+      max-width:
+        600px;
+
+      width:
+        90%;
+
+      padding:
+        40px;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      align-items:
+        center;
+    }
+
+
+    .modal-cover {
+
+      width:
+        245px;
+
+      max-width:
+        70vw;
+
+      border-radius:
+        4px;
+
+      box-shadow:
+        0 20px 45px rgba(0,0,0,0.9);
+
+      margin-bottom:
+        30px;
+    }
+
+
+    .modal-title {
+
+      font-family:
+        var(--font-serif);
+
+      font-size:
+        clamp(1.8rem,4vw,2.5rem);
+
+      margin-bottom:
+        10px;
+
+      color:
+        var(--cream);
+    }
+
+
+    .modal-text {
+
+      font-size:
+        0.9rem;
+
+      color:
+        rgba(244,239,234,0.7);
+
+      margin-bottom:
+        30px;
+
+      line-height:
+        1.7;
+    }
+
+
+    /* =====================================================
+       MODAL BUTTONS
+    ====================================================== */
+
+    .modal-buttons {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      gap:
+        15px;
+
+      flex-wrap:
+        wrap;
+    }
+
+
+    /* =====================================================
+       BACK BUTTON
+    ====================================================== */
+
+    .back-book-btn {
+
+      background:
+        transparent;
+
+      border:
+        1px solid rgba(244,239,234,0.4);
+
+      color:
+        rgba(244,239,234,0.85);
+
+      padding:
+        14px 28px;
+
+      font-family:
+        var(--font-sans);
+
+      font-size:
+        0.75rem;
+
+      letter-spacing:
+        3px;
+
+      text-transform:
+        uppercase;
+
+      cursor:
+        pointer;
+
+      transition:
+        all 0.4s ease;
+
+      margin-top:
+        10px;
+    }
+
+
+    .back-book-btn:hover {
+
+      border-color:
+        var(--warm-orange);
+
+      color:
+        var(--warm-orange);
+
+      background:
+        rgba(217,119,36,0.08);
+
+      transform:
+        translateX(-4px);
+    }
+
+
+    .modal-buttons .intro-btn {
+
+      margin-top:
+        10px;
+    }
+
+
+    /* =====================================================
+       NIGHT SECTION
+    ====================================================== */
+
+    .section-night {
+
+      position:
+        relative;
+
+      height:
+        100vh;
+
+      background:
+
+        linear-gradient(
+          180deg,
+          var(--bg-black) 0%,
+          #04090c 100%
+        );
+
+      display:
+        flex;
+
+      justify-content:
+        center;
+
+      align-items:
+        center;
+
+      text-align:
+        center;
+
+      padding:
+        0 20px;
+
+      z-index:
+        15;
+
+      overflow:
+        hidden;
+    }
+
+
+    .night-overlay-bg {
+
+      position:
+        absolute;
+
+      inset:
+        0;
+
+      background:
+
+        radial-gradient(
+          circle,
+          rgba(14,30,22,0.4) 0%,
+          rgba(5,5,7,0.9) 80%
+        );
+    }
+
+
+    .night-content {
+
+      position:
+        relative;
+
+      z-index:
+        5;
+
+      max-width:
+        800px;
+    }
+
+
+    .night-quote-1 {
+
+      font-family:
+        var(--font-serif);
+
+      font-size:
+        clamp(2rem,4.5vw,3.8rem);
+
+      line-height:
+        1.2;
+
+      text-transform:
+        uppercase;
+
+      margin-bottom:
+        30px;
+    }
+
+
+    .night-quote-2 {
+
+      font-family:
+        var(--font-serif);
+
+      font-size:
+        clamp(1rem,2vw,1.25rem);
+
+      color:
+        var(--muted-gold);
+
+      font-style:
+        italic;
+
+      line-height:
+        1.8;
+    }
+
+
+    /* =====================================================
+       FINAL
+    ====================================================== */
+
+    .section-final {
+
+      position:
+        relative;
+
+      background:
+        var(--bg-black);
+
+      padding:
+        120px 20px;
+
+      text-align:
+        center;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      z-index:
+        15;
+    }
+
+
+    .final-title {
+
+      font-family:
+        var(--font-serif);
+
+      font-size:
+        clamp(2.5rem,6vw,4.5rem);
+
+      text-transform:
+        uppercase;
+
+      line-height:
+        1.1;
+
+      margin-bottom:
+        25px;
+    }
+
+
+    .final-title span {
+
+      color:
+        var(--warm-orange);
+
+      display:
+        block;
+    }
+
+
+    .final-poetic {
+
+      font-family:
+        var(--font-serif);
+
+      font-size:
+        1.2rem;
+
+      font-style:
+        italic;
+
+      color:
+        rgba(244,239,234,0.85);
+
+      max-width:
+        600px;
+
+      line-height:
+        1.8;
+
+      margin:
+        0 auto 40px;
+    }
+
+
+    .final-author {
+
+      font-size:
+        0.85rem;
+
+      letter-spacing:
+        5px;
+
+      color:
+        var(--muted-gold);
+
+      text-transform:
+        uppercase;
+
+      margin-bottom:
+        50px;
+    }
+
+
+    .replay-btn {
+
+      background:
+        transparent;
+
+      border:
+        1px solid var(--warm-orange);
+
+      color:
+        var(--cream);
+
+      padding:
+        16px 36px;
+
+      font-size:
+        0.8rem;
+
+      letter-spacing:
+        4px;
+
+      text-transform:
+        uppercase;
+
+      cursor:
+        pointer;
+
+      transition:
+        all 0.4s ease;
+    }
+
+
+    .replay-btn:hover {
+
+      background:
+        var(--warm-orange);
+
+      color:
+        var(--bg-black);
+
+      box-shadow:
+        0 0 30px
+        rgba(217,119,36,0.5);
+    }
+
+
+    /* =====================================================
+       REVEAL
+    ====================================================== */
+
+    .reveal {
+
+      opacity:
+        0;
+
+      transform:
+        translateY(40px);
+
+      transition:
+        all 1.2s
+        cubic-bezier(0.25,1,0.5,1);
+    }
+
+
+    .reveal.active {
+
+      opacity:
+        1;
+
+      transform:
+        translateY(0);
+    }
+
+
+    /* =====================================================
+       ANIMATION
+    ====================================================== */
+
+    @keyframes fadeInBlur {
+
+      0% {
+
+        opacity:
+          0;
+
+        filter:
+          blur(10px);
+      }
+
+      100% {
+
+        opacity:
+          1;
+
+        filter:
+          blur(0);
+      }
+    }
+
+
+    @keyframes fogMove {
+
+      0% {
+
+        transform:
+          translateX(0);
+      }
+
+      50% {
+
+        transform:
+          translateX(-25%);
+      }
+
+      100% {
+
+        transform:
+          translateX(0);
+      }
+    }
+
+
+    @keyframes sway {
+
+      0% {
+
+        transform:
+          rotate(0deg);
+      }
+
+      100% {
+
+        transform:
+          rotate(3deg);
+      }
+    }
+
+
+    @keyframes scrollDown {
+
+      0% {
+
+        transform:
+          translateY(-100%);
+      }
+
+      100% {
+
+        transform:
+          translateY(100%);
+      }
+    }
+
+
+    @keyframes floatBook {
+
+      0% {
+
+        transform:
+          translateY(0)
+          rotateY(-5deg);
+      }
+
+      100% {
+
+        transform:
+          translateY(-15px)
+          rotateY(5deg);
+      }
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ====================================================== */
+
+    @media (max-width: 900px) {
+
+      .navbar {
+
+        padding:
+          20px;
+      }
+
+
+      .nav-links {
+
+        position:
+          fixed;
+
+        top:
+          0;
+
+        right:
+          -100%;
+
+        width:
+          70%;
+
+        height:
+          100vh;
+
+        background:
+          var(--bg-charcoal);
+
+        flex-direction:
+          column;
+
+        justify-content:
+          center;
+
+        align-items:
+          center;
+
+        transition:
+          0.5s ease;
+      }
+
+
+      .nav-links.active {
+
+        right:
+          0;
+      }
+
+
+      .hamburger {
+
+        display:
+          flex;
+
+        z-index:
+          1001;
+      }
+
+
+      .audio-controls {
+
+        position:
+          absolute;
+
+        top:
+          65px;
+
+        right:
+          20px;
+
+        flex-direction:
+          column;
+
+        align-items:
+          flex-end;
+      }
+
+
+      .section-story {
+
+        padding:
+          100px 8%;
+      }
+
+
+      .section-book {
+
+        grid-template-columns:
+          1fr;
+
+        padding:
+          100px 8%;
+
+        gap:
+          40px;
+
+        text-align:
+          center;
+      }
+
+
+      .book-info {
+
+        align-items:
+          center;
+
+        text-align:
+          center;
+      }
+
+
+      .tag-pills {
+
+        justify-content:
+          center;
+      }
+
+
+      .story-tree-container {
+
+        height:
+          300px;
+      }
+    }
+
+
+    @media (max-width: 600px) {
+
+      .audio-btn {
+
+        font-size:
+          0.58rem;
+
+        padding:
+          8px 12px;
+
+        letter-spacing:
+          1px;
+      }
+
+
+      .intro-sub {
+
+        font-size:
+          0.65rem;
+
+        letter-spacing:
+          3px;
+      }
+
+
+      .modal-content {
+
+        padding:
+          25px;
+      }
+
+
+      .modal-cover {
+
+        width:
+          190px;
+      }
+
+
+      .modal-buttons {
+
+        flex-direction:
+          column;
+
+        width:
+          100%;
+      }
+
+
+      .modal-buttons .intro-btn,
+      .back-book-btn {
+
+        width:
+          100%;
+
+        text-align:
+          center;
+      }
+    }
+
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      ::before,
+      ::after {
+
+        animation-duration:
+          1ms !important;
+
+        animation-iteration-count:
+          1 !important;
+
+        scroll-behavior:
+          auto !important;
+
+        transition-duration:
+          0s !important;
+      }
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =====================================================
+       VISUAL
+  ====================================================== -->
+
+  <div class="film-grain"></div>
+
+  <div
+    class="cursor-glow"
+    id="cursorGlow"
+  ></div>
+
+
+  <canvas
+    class="rain-canvas"
+    id="rainCanvas"
+  ></canvas>
+
+
+  <canvas
+    class="particle-canvas"
+    id="particleCanvas"
+  ></canvas>
+
+
+  <!-- =====================================================
+       WHITE BLOSSOMS
+       FILE HARUS SATU FOLDER DENGAN HTML
+  ====================================================== -->
+
+  <audio
+    id="whiteBlossomAudio"
+    loop
+    preload="auto"
+  >
+
+    <source
+      src="white-blossoms.mp3"
+      type="audio/mpeg"
+    >
+
+  </audio>
+
+
+  <!-- =====================================================
+       NAVBAR
+  ====================================================== -->
+
+  <nav
+    class="navbar"
+    id="navbar"
+  >
+
+    <a
+      href="#"
+      class="nav-brand"
+    >
+      BBBP
+    </a>
+
+
+    <ul
+      class="nav-links"
+      id="navLinks"
+    >
+
+      <li>
+        <a href="#hero">
+          Home
+        </a>
+      </li>
+
+      <li>
+        <a href="#story">
+          Story
+        </a>
+      </li>
+
+      <li>
+        <a href="#book">
+          Book
+        </a>
+      </li>
+
+      <li>
+        <a href="#ending">
+          End
+        </a>
+      </li>
+
+    </ul>
+
+
+    <div class="audio-controls">
+
+      <button
+        class="audio-btn"
+        id="rainBtn"
+        type="button"
+      >
+        ☔ HUJAN OFF
+      </button>
+
+
+      <button
+        class="audio-btn"
+        id="musicBtn"
+        type="button"
+      >
+        ♪ WHITE BLOSSOM OFF
+      </button>
+
+    </div>
+
+
+    <div
+      class="hamburger"
+      id="hamburger"
+    >
+
+      <span></span>
+      <span></span>
+      <span></span>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =====================================================
+       INTRO
+  ====================================================== -->
+
+  <div
+    class="intro-screen"
+    id="introScreen"
+  >
+
+    <p class="intro-sub">
+      SEBUAH CERITA DARI BANDUNG
+    </p>
+
+
+    <h1 class="intro-title">
+
+      <span id="introLine1">
+        BANDUNG
+      </span>
+
+      <span id="introLine2">
+        BALADA BAIT
+      </span>
+
+      <span
+        id="introLine3"
+        style="color: var(--warm-orange);"
+      >
+        YANG PECAH
+      </span>
+
+    </h1>
+
+
+    <div
+      class="intro-line"
+      id="introLine"
+    ></div>
+
+
+    <button
+      class="intro-btn"
+      id="enterBtn"
+    >
+      MASUK KE BANDUNG
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       HERO
+  ====================================================== -->
+
+  <section
+    class="hero"
+    id="hero"
+  >
+
+    <div class="sky-bg"></div>
+
+    <div class="sun-glow"></div>
+
+    <div class="fog-layer"></div>
+
+
+    <!-- BACK BUILDINGS -->
+
+    <svg
+      class="city-layer buildings-back"
+      viewBox="0 0 1200 400"
+      preserveAspectRatio="none"
+    >
+
+      <path
+        fill="#081410"
+        d="
+        M0,400
+        L0,280
+        L40,280
+        L40,310
+        L90,310
+        L90,260
+        L140,260
+        L140,400
+        L200,400
+        L200,220
+        L250,220
+        L280,180
+        L310,220
+        L360,220
+        L360,400
+        L500,400
+        L500,300
+        L580,300
+        L580,240
+        L650,240
+        L650,400
+        L800,400
+        L800,270
+        L870,270
+        L870,400
+        L1000,400
+        L1000,210
+        L1080,210
+        L1080,400
+        Z
+        "
+      />
+
+    </svg>
+
+
+    <!-- FRONT BUILDINGS -->
+
+    <svg
+      class="city-layer buildings-front"
+      viewBox="0 0 1200 400"
+      preserveAspectRatio="none"
+    >
+
+      <path
+        fill="#040907"
+        d="
+        M0,400
+        L0,320
+        L80,320
+        L80,400
+        L150,400
+        L150,290
+        L220,290
+        L220,400
+        L350,400
+        L350,340
+        L420,340
+        L420,400
+        L520,400
+        L520,200
+        L540,200
+        L540,160
+        L555,160
+        L555,130
+        L565,130
+        L565,160
+        L580,160
+        L580,200
+        L600,200
+        L600,400
+        L750,400
+        L750,310
+        L830,310
+        L830,400
+        L950,400
+        L950,330
+        L1050,330
+        L1050,400
+        Z
+        "
+      />
+
+      <circle
+        cx="200"
+        cy="380"
+        r="3"
+        fill="#f5b041"
+        opacity="0.8"
+      />
+
+      <circle
+        cx="560"
+        cy="220"
+        r="2"
+        fill="#d97724"
+        opacity="0.9"
+      />
+
+      <circle
+        cx="800"
+        cy="350"
+        r="3"
+        fill="#f5b041"
+        opacity="0.7"
+      />
+
+    </svg>
+
+
+    <!-- ROAD -->
+
+    <div class="road-perspective">
+
+      <div class="road-reflection"></div>
+
+      <div class="road-line"></div>
+
+    </div>
+
+
+    <!-- TREE CANOPY -->
+
+    <div class="tree-canopy">
+
+      <div
+        class="foliage"
+        style="
+          width:350px;
+          height:350px;
+          top:-100px;
+          left:-100px;
+        "
+      ></div>
+
+
+      <div
+        class="foliage"
+        style="
+          width:450px;
+          height:400px;
+          top:-120px;
+          right:-120px;
+        "
+      ></div>
+
+
+      <div
+        class="foliage"
+        style="
+          width:250px;
+          height:250px;
+          top:100px;
+          left:-80px;
+        "
+      ></div>
+
+
+      <div
+        class="foliage"
+        style="
+          width:300px;
+          height:300px;
+          top:80px;
+          right:-80px;
+        "
+      ></div>
+
+    </div>
+
+
+    <!-- HERO CONTENT -->
+
+    <div class="hero-content">
+
+      <p class="author-name">
+        RIKA ISMAYANTI
+      </p>
+
+
+      <h1 class="main-title">
+
+        BANDUNG
+
+        <span class="highlight">
+          BALADA BAIT
+        </span>
+
+        YANG PECAH
+
+      </h1>
+
+
+      <p class="hero-tagline">
+
+        Di antara jalan yang basah,
+        pepohonan yang menyimpan cerita,
+        dan kota yang tak pernah benar-benar diam,
+        ada bait-bait yang pernah utuh,
+        lalu pecah.
+
+      </p>
+
+    </div>
+
+
+    <!-- SCROLL -->
+
+    <div class="scroll-indicator">
+
+      <span>
+        SCROLL UNTUK MEMBACA
+      </span>
+
+      <div class="scroll-line"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       STORY
+  ====================================================== -->
+
+  <section
+    class="section-story"
+    id="story"
+  >
+
+    <div class="story-content reveal">
+
+      <h2 class="story-title">
+
+        KOTA MENYIMPAN
+
+        <span>
+          LEBIH BANYAK
+        </span>
+
+        DARIPADA KENANGAN.
+
+      </h2>
+
+
+      <p class="story-text">
+
+        Bandung bukan sekadar latar.
+        Ia menjadi ruang tempat pertemuan,
+        kehilangan, percakapan,
+        dan perasaan tumbuh perlahan.
+
+      </p>
+
+
+      <blockquote class="story-quote">
+
+        “Mungkin yang pecah bukan ceritanya.
+        Mungkin hanya cara kita membacanya.”
+
+      </blockquote>
+
+    </div>
+
+
+    <div class="story-tree-container reveal">
+
+      <svg
+        class="tree-svg"
+        viewBox="0 0 400 500"
+      >
+
+        <path
+          d="
+          M170,500
+          C160,400 130,350 150,250
+          C160,200 120,150 100,100
+
+          M150,250
+          C180,180 230,140 270,80
+
+          M180,380
+          C230,340 280,320 320,300
+          "
+          stroke="#050a07"
+          stroke-width="18"
+          fill="none"
+          stroke-linecap="round"
+        />
+
+
+        <circle
+          cx="100"
+          cy="90"
+          r="65"
+          fill="#0c1d15"
+          opacity="0.9"
+        />
+
+
+        <circle
+          cx="150"
+          cy="70"
+          r="80"
+          fill="#12291e"
+          opacity="0.85"
+        />
+
+
+        <circle
+          cx="260"
+          cy="75"
+          r="70"
+          fill="#0a1812"
+          opacity="0.95"
+        />
+
+
+        <circle
+          cx="310"
+          cy="290"
+          r="50"
+          fill="#0e2319"
+          opacity="0.85"
+        />
+
+
+        <circle
+          cx="140"
+          cy="180"
+          r="2"
+          fill="#f5b041"
+        />
+
+
+        <circle
+          cx="220"
+          cy="120"
+          r="3"
+          fill="#d97724"
+        />
+
+
+        <circle
+          cx="280"
+          cy="220"
+          r="2"
+          fill="#f5b041"
+        />
+
+      </svg>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       BOOK
+  ====================================================== -->
+
+  <section
+    class="section-book"
+    id="book"
+  >
+
+
+    <!-- COVER -->
+
+    <div class="book-display reveal">
+
+      <div class="book-glow"></div>
+
+
+      <div
+        class="book-wrapper"
+        id="bookCover"
+      >
+
+        <img
+          src="Cover Book 500x750 Bandung.jpg"
+          alt="Cover Novel Bandung Balada Bait yang Pecah karya Rika Ismayanti"
+          class="book-cover-img"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- DETAIL -->
+
+    <div class="book-info reveal">
+
+      <p class="book-subtitle">
+        SEBUAH NOVEL
+      </p>
+
+
+      <h2 class="book-main-title">
+        BANDUNG BALADA BAIT YANG PECAH
+      </h2>
+
+
+      <p class="book-author">
+        KARYA RIKA ISMAYANTI
+      </p>
+
+
+      <p class="book-description">
+
+        Setiap sudut kota memiliki cerita.
+        Setiap jalan menyimpan percakapan.
+        Dan setiap bait memiliki sesuatu
+        yang belum selesai.
+
+      </p>
+
+
+      <div class="tag-pills">
+
+        <span class="pill">
+          BANDUNG
+        </span>
+
+        <span class="pill">
+          DRAMA
+        </span>
+
+        <span class="pill">
+          ROMANSA
+        </span>
+
+        <span class="pill">
+          LITERASI
+        </span>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       BOOK MODAL
+  ====================================================== -->
+
+  <div
+    class="modal-overlay"
+    id="bookModal"
+  >
+
+
+    <div class="modal-content">
+
+
+      <!-- COVER DI MODAL -->
+
+      <img
+        src="Cover Book 500x750 Bandung.jpg"
+        alt="Cover Novel Bandung Balada Bait yang Pecah"
+        class="modal-cover"
+      >
+
+
+      <h3 class="modal-title">
+
+        BUKA HALAMAN PERTAMA
+
+      </h3>
+
+
+      <p class="modal-text">
+
+        Setiap cerita dimulai dari satu halaman.
+
+      </p>
+
+
+      <!-- =================================================
+           DUA TOMBOL
+      ================================================== -->
+
+      <div class="modal-buttons">
+
+
+        <!-- KEMBALI -->
+
+        <button
+          class="back-book-btn"
+          id="backBookBtn"
+          type="button"
+        >
+
+          ← KEMBALI
+
+        </button>
+
+
+        <!-- BACA SEKARANG -->
+
+        <a
+          href="https://www.kwikku.com/novel/read/bandung-balada-dan-bait-yang-pecah"
+          class="intro-btn"
+          id="continueBtn"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            opacity:1;
+            display:inline-block;
+            text-decoration:none;
+          "
+        >
+
+          BACA SEKARANG
+
+        </a>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       NIGHT
+  ====================================================== -->
+
+  <section
+    class="section-night"
+  >
+
+    <div class="night-overlay-bg"></div>
+
+
+    <div class="night-content reveal">
+
+
+      <h2 class="night-quote-1">
+
+        BARANGKALI,
+        KITA TIDAK PERNAH
+        BENAR-BENAR MENINGGALKAN
+        SEBUAH KOTA.
+
+      </h2>
+
+
+      <p class="night-quote-2">
+
+        Kita hanya belajar berjalan
+        melewati kenangan tanpa menoleh.
+
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       ENDING
+  ====================================================== -->
+
+  <section
+    class="section-final"
+    id="ending"
+  >
+
+    <div class="reveal">
+
+
+      <h2 class="final-title">
+
+        BANDUNG
+
+        <span>
+          BALADA BAIT YANG PECAH
+        </span>
+
+      </h2>
+
+
+      <p class="final-poetic">
+
+        Setiap kota punya cerita yang pecah.
+
+        <br>
+
+        Dan mungkin,
+        cerita ini sedang menunggu seseorang
+        untuk menyatukan bait-baitnya kembali.
+
+      </p>
+
+
+      <p class="final-author">
+
+        RIKA ISMAYANTI
+
+      </p>
+
+
+      <button
+        class="replay-btn"
+        id="replayBtn"
+      >
+
+        ULANGI TEASER
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
+  <script>
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+
+
+        /* =================================================
+           INTRO
+        ================================================= */
+
+        const introScreen =
+          document.getElementById(
+            "introScreen"
+          );
+
+
+        const enterBtn =
+          document.getElementById(
+            "enterBtn"
+          );
+
+
+        const introLine1 =
+          document.getElementById(
+            "introLine1"
+          );
+
+
+        const introLine2 =
+          document.getElementById(
+            "introLine2"
+          );
+
+
+        const introLine3 =
+          document.getElementById(
+            "introLine3"
+          );
+
+
+        const introLine =
+          document.getElementById(
+            "introLine"
+          );
+
+
+        setTimeout(
+          () => {
+
+            introLine1.style.opacity =
+              "1";
+
+            introLine1.style.filter =
+              "blur(0)";
+
+            introLine1.style.transform =
+              "scale(1)";
+
+          },
+          1200
+        );
+
+
+        setTimeout(
+          () => {
+
+            introLine2.style.opacity =
+              "1";
+
+            introLine2.style.filter =
+              "blur(0)";
+
+            introLine2.style.transform =
+              "scale(1)";
+
+          },
+          2400
+        );
+
+
+        setTimeout(
+          () => {
+
+            introLine3.style.opacity =
+              "1";
+
+            introLine3.style.filter =
+              "blur(0)";
+
+            introLine3.style.transform =
+              "scale(1)";
+
+          },
+          3600
+        );
+
+
+        setTimeout(
+          () => {
+
+            introLine.style.width =
+              "120px";
+
+          },
+          4500
+        );
+
+
+        setTimeout(
+          () => {
+
+            enterBtn.style.opacity =
+              "1";
+
+          },
+          5200
+        );
+
+
+        enterBtn.addEventListener(
+          "click",
+          () => {
+
+            introScreen.style.opacity =
+              "0";
+
+            setTimeout(
+              () => {
+
+                introScreen.style.visibility =
+                  "hidden";
+
+              },
+              1500
+            );
+
+          }
+        );
+
+
+        /* =================================================
+           NAVBAR
+        ================================================= */
+
+        const navbar =
+          document.getElementById(
+            "navbar"
+          );
+
+
+        const hamburger =
+          document.getElementById(
+            "hamburger"
+          );
+
+
+        const navLinks =
+          document.getElementById(
+            "navLinks"
+          );
+
+
+        window.addEventListener(
+          "scroll",
+          () => {
+
+            if (
+              window.scrollY > 50
+            ) {
+
+              navbar.classList.add(
+                "scrolled"
+              );
+
+            } else {
+
+              navbar.classList.remove(
+                "scrolled"
+              );
+
+            }
+
+          }
+        );
+
+
+        hamburger.addEventListener(
+          "click",
+          () => {
+
+            navLinks.classList.toggle(
+              "active"
+            );
+
+          }
+        );
+
+
+        /* =================================================
+           RAIN VISUAL
+        ================================================= */
+
+        const rainCanvas =
+          document.getElementById(
+            "rainCanvas"
+          );
+
+
+        const rainCtx =
+          rainCanvas.getContext(
+            "2d"
+          );
+
+
+        const particleCanvas =
+          document.getElementById(
+            "particleCanvas"
+          );
+
+
+        const particleCtx =
+          particleCanvas.getContext(
+            "2d"
+          );
+
+
+        let width =
+          window.innerWidth;
+
+
+        let height =
+          window.innerHeight;
+
+
+        rainCanvas.width =
+          width;
+
+
+        rainCanvas.height =
+          height;
+
+
+        particleCanvas.width =
+          width;
+
+
+        particleCanvas.height =
+          height;
+
+
+        window.addEventListener(
+          "resize",
+          () => {
+
+            width =
+              window.innerWidth;
+
+            height =
+              window.innerHeight;
+
+
+            rainCanvas.width =
+              width;
+
+            rainCanvas.height =
+              height;
+
+
+            particleCanvas.width =
+              width;
+
+            particleCanvas.height =
+              height;
+
+          }
+        );
+
+
+        const raindrops =
+          Array.from(
+            {
+              length: 80
+            },
+            () => ({
+
+              x:
+                Math.random() *
+                width,
+
+              y:
+                Math.random() *
+                height,
+
+              length:
+                Math.random() *
+                20 + 10,
+
+              speed:
+                Math.random() *
+                10 + 12
+
+            })
+          );
+
+
+        function drawRain() {
+
+          rainCtx.clearRect(
+            0,
+            0,
+            width,
+            height
+          );
+
+
+          rainCtx.strokeStyle =
+            "rgba(244,239,234,0.4)";
+
+
+          rainCtx.lineWidth =
+            1;
+
+
+          raindrops.forEach(
+            (drop) => {
+
+              rainCtx.beginPath();
+
+
+              rainCtx.moveTo(
+                drop.x,
+                drop.y
+              );
+
+
+              rainCtx.lineTo(
+                drop.x -
+                drop.length * 0.2,
+
+                drop.y +
+                drop.length
+              );
+
+
+              rainCtx.stroke();
+
+
+              drop.y +=
+                drop.speed;
+
+
+              drop.x -=
+                drop.speed * 0.2;
+
+
+              if (
+                drop.y >
+                height
+              ) {
+
+                drop.y =
+                  -20;
+
+                drop.x =
+                  Math.random() *
+                  width;
+
+              }
+
+            }
+          );
+
+
+          requestAnimationFrame(
+            drawRain
+          );
+
+        }
+
+
+        drawRain();
+
+
+        /* =================================================
+           PARTICLES
+        ================================================= */
+
+        const particles =
+          Array.from(
+            {
+              length: 35
+            },
+            () => ({
+
+              x:
+                Math.random() *
+                width,
+
+              y:
+                Math.random() *
+                height,
+
+              radius:
+                Math.random() *
+                2 + 1,
+
+              alpha:
+                Math.random(),
+
+              speedX:
+                Math.random() *
+                0.6 - 0.3,
+
+              speedY:
+                Math.random() *
+                0.6 - 0.3
+
+            })
+          );
+
+
+        function drawParticles() {
+
+          particleCtx.clearRect(
+            0,
+            0,
+            width,
+            height
+          );
+
+
+          particles.forEach(
+            (p) => {
+
+              particleCtx.beginPath();
+
+
+              particleCtx.arc(
+                p.x,
+                p.y,
+                p.radius,
+                0,
+                Math.PI * 2
+              );
+
+
+              particleCtx.fillStyle =
+                `rgba(
+                  245,
+                  176,
+                  65,
+                  ${p.alpha}
+                )`;
+
+
+              particleCtx.shadowBlur =
+                10;
+
+
+              particleCtx.shadowColor =
+                "#d97724";
+
+
+              particleCtx.fill();
+
+
+              p.x +=
+                p.speedX;
+
+
+              p.y +=
+                p.speedY;
+
+
+              if (
+                p.x < 0 ||
+                p.x > width
+              ) {
+
+                p.speedX *=
+                  -1;
+
+              }
+
+
+              if (
+                p.y < 0 ||
+                p.y > height
+              ) {
+
+                p.speedY *=
+                  -1;
+
+              }
+
+            }
+          );
+
+
+          requestAnimationFrame(
+            drawParticles
+          );
+
+        }
+
+
+        drawParticles();
+
+
+        /* =================================================
+           CURSOR
+        ================================================= */
+
+        const cursorGlow =
+          document.getElementById(
+            "cursorGlow"
+          );
+
+
+        window.addEventListener(
+          "mousemove",
+          (event) => {
+
+            cursorGlow.style.left =
+              `${event.clientX}px`;
+
+            cursorGlow.style.top =
+              `${event.clientY}px`;
+
+          }
+        );
+
+
+        /* =================================================
+           SCROLL REVEAL
+        ================================================= */
+
+        const reveals =
+          document.querySelectorAll(
+            ".reveal"
+          );
+
+
+        const observer =
+          new IntersectionObserver(
+            (entries) => {
+
+              entries.forEach(
+                (entry) => {
+
+                  if (
+                    entry.isIntersecting
+                  ) {
+
+                    entry.target.classList.add(
+                      "active"
+                    );
+
+                  }
+
+                }
+              );
+
+            },
+            {
+              threshold: 0.15
+            }
+          );
+
+
+        reveals.forEach(
+          (element) => {
+
+            observer.observe(
+              element
+            );
+
+          }
+        );
+
+
+        /* =================================================
+           BOOK MODAL
+        ================================================= */
+
+        const bookCover =
+          document.getElementById(
+            "bookCover"
+          );
+
+
+        const bookModal =
+          document.getElementById(
+            "bookModal"
+          );
+
+
+        const backBookBtn =
+          document.getElementById(
+            "backBookBtn"
+          );
+
+
+        /* -----------------------------------------------
+           KLIK COVER
+        ------------------------------------------------ */
+
+        bookCover.addEventListener(
+          "click",
+          () => {
+
+            bookModal.classList.add(
+              "active"
+            );
+
+            document.body.style.overflow =
+              "hidden";
+
+          }
+        );
+
+
+        /* -----------------------------------------------
+           KEMBALI KE DETAIL BUKU
+        ------------------------------------------------ */
+
+        backBookBtn.addEventListener(
+          "click",
+          () => {
+
+            bookModal.classList.remove(
+              "active"
+            );
+
+            document.body.style.overflow =
+              "";
+
+          }
+        );
+
+
+        /* -----------------------------------------------
+           KLIK AREA LUAR MODAL
+        ------------------------------------------------ */
+
+        bookModal.addEventListener(
+          "click",
+          (event) => {
+
+            if (
+              event.target ===
+              bookModal
+            ) {
+
+              bookModal.classList.remove(
+                "active"
+              );
+
+              document.body.style.overflow =
+                "";
+
+            }
+
+          }
+        );
+
+
+        /* =================================================
+           ESCAPE UNTUK KELUAR MODAL
+        ================================================= */
+
+        document.addEventListener(
+          "keydown",
+          (event) => {
+
+            if (
+              event.key === "Escape" &&
+              bookModal.classList.contains(
+                "active"
+              )
+            ) {
+
+              bookModal.classList.remove(
+                "active"
+              );
+
+              document.body.style.overflow =
+                "";
+
+            }
+
+          }
+        );
+
+
+        /* =================================================
+           REPLAY
+        ================================================= */
+
+        const replayBtn =
+          document.getElementById(
+            "replayBtn"
+          );
+
+
+        replayBtn.addEventListener(
+          "click",
+          () => {
+
+            window.scrollTo({
+
+              top:
+                0,
+
+              behavior:
+                "smooth"
+
+            });
+
+
+            setTimeout(
+              () => {
+
+                introScreen.style.visibility =
+                  "visible";
+
+                introScreen.style.opacity =
+                  "1";
+
+              },
+              800
+            );
+
+          }
+        );
+
+
+        /* =================================================
+           RAIN AUDIO
+        ================================================= */
+
+        const rainBtn =
+          document.getElementById(
+            "rainBtn"
+          );
+
+
+        let audioCtx =
+          null;
+
+
+        let rainSource =
+          null;
+
+
+        let rainPlaying =
+          false;
+
+
+        function createRainSound() {
+
+          if (audioCtx) {
+
+            return;
+
+          }
+
+
+          const AudioContextClass =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
+
+          if (!AudioContextClass) {
+
+            throw new Error(
+              "Web Audio API tidak didukung browser."
+            );
+
+          }
+
+
+          audioCtx =
+            new AudioContextClass();
+
+
+          const bufferSize =
+            audioCtx.sampleRate * 2;
+
+
+          const noiseBuffer =
+            audioCtx.createBuffer(
+              1,
+              bufferSize,
+              audioCtx.sampleRate
+            );
+
+
+          const output =
+            noiseBuffer.getChannelData(
+              0
+            );
+
+
+          for (
+            let i = 0;
+            i < bufferSize;
+            i++
+          ) {
+
+            output[i] =
+              Math.random() * 2 - 1;
+
+          }
+
+
+          rainSource =
+            audioCtx.createBufferSource();
+
+
+          rainSource.buffer =
+            noiseBuffer;
+
+
+          rainSource.loop =
+            true;
+
+
+          const filter =
+            audioCtx.createBiquadFilter();
+
+
+          filter.type =
+            "lowpass";
+
+
+          filter.frequency.setValueAtTime(
+            900,
+            audioCtx.currentTime
+          );
+
+
+          const gainNode =
+            audioCtx.createGain();
+
+
+          gainNode.gain.setValueAtTime(
+            0.045,
+            audioCtx.currentTime
+          );
+
+
+          rainSource.connect(
+            filter
+          );
+
+
+          filter.connect(
+            gainNode
+          );
+
+
+          gainNode.connect(
+            audioCtx.destination
+          );
+
+
+          rainSource.start();
+
+        }
+
+
+        rainBtn.addEventListener(
+          "click",
+          async () => {
+
+            try {
+
+              if (!audioCtx) {
+
+                createRainSound();
+
+              }
+
+
+              if (
+                audioCtx.state ===
+                "suspended"
+              ) {
+
+                await audioCtx.resume();
+
+              }
+
+
+              if (
+                !rainPlaying
+              ) {
+
+                rainPlaying =
+                  true;
+
+
+                rainBtn.textContent =
+                  "☔ HUJAN ON";
+
+
+                rainBtn.classList.add(
+                  "active"
+                );
+
+              } else {
+
+                await audioCtx.suspend();
+
+
+                rainPlaying =
+                  false;
+
+
+                rainBtn.textContent =
+                  "☔ HUJAN OFF";
+
+
+                rainBtn.classList.remove(
+                  "active"
+                );
+
+              }
+
+            } catch (error) {
+
+              console.error(
+                "Rain audio error:",
+                error
+              );
+
+            }
+
+          }
+        );
+
+
+        /* =================================================
+           WHITE BLOSSOMS
+        ================================================= */
+
+        const musicBtn =
+          document.getElementById(
+            "musicBtn"
+          );
+
+
+        const whiteBlossomAudio =
+          document.getElementById(
+            "whiteBlossomAudio"
+          );
+
+
+        let musicPlaying =
+          false;
+
+
+        musicBtn.addEventListener(
+          "click",
+          async () => {
+
+            try {
+
+
+              /* -------------------------------------------
+                 JIKA MUSIK BELUM NYALA
+              -------------------------------------------- */
+
+              if (
+                !musicPlaying
+              ) {
+
+
+                await whiteBlossomAudio.play();
+
+
+                musicPlaying =
+                  true;
+
+
+                musicBtn.textContent =
+                  "♪ WHITE BLOSSOM ON";
+
+
+                musicBtn.classList.add(
+                  "active"
+                );
+
+
+              }
+
+              /* -------------------------------------------
+                 JIKA MUSIK SEDANG NYALA
+              -------------------------------------------- */
+
+              else {
+
+
+                whiteBlossomAudio.pause();
+
+
+                musicPlaying =
+                  false;
+
+
+                musicBtn.textContent =
+                  "♪ WHITE BLOSSOM OFF";
+
+
+                musicBtn.classList.remove(
+                  "active"
+                );
+
+              }
+
+
+            } catch (error) {
+
+              console.error(
+                "White Blossoms gagal diputar:",
+                error
+              );
+
+
+              musicPlaying =
+                false;
+
+
+              musicBtn.textContent =
+                "♪ WHITE BLOSSOM OFF";
+
+
+              musicBtn.classList.remove(
+                "active"
+              );
+
+
+              alert(
+                "Musik tidak dapat diputar. Pastikan file 'white-blossoms.mp3' berada di folder yang sama dengan file HTML."
+              );
+
+            }
+
+          }
+        );
+
+
+        /* =================================================
+           MUSIC ENDED
+        ================================================= */
+
+        whiteBlossomAudio.addEventListener(
+          "ended",
+          () => {
+
+            musicPlaying =
+              false;
+
+
+            musicBtn.textContent =
+              "♪ WHITE BLOSSOM OFF";
+
+
+            musicBtn.classList.remove(
+              "active"
+            );
+
+          }
+        );
+
+
+        /* =================================================
+           MUSIC ERROR
+        ================================================= */
+
+        whiteBlossomAudio.addEventListener(
+          "error",
+          () => {
+
+            musicPlaying =
+              false;
+
+
+            musicBtn.textContent =
+              "♪ WHITE BLOSSOM OFF";
+
+
+            musicBtn.classList.remove(
+              "active"
+            );
+
+
+            console.error(
+              "white-blossoms.mp3 tidak ditemukan."
+            );
+
+          }
+        );
+
+      }
+
+    );
+
+  </script>
+
+</body>
+
+</html>
